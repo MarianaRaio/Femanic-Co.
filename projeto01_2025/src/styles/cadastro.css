@@ -1,0 +1,68 @@
+x/* Cadastro.css */
+.header-principal {
+    background: linear-gradient(90deg, #212529 0%, #48515b 100%);
+    padding: 1.5rem 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.header-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #ffc107;
+    margin-top: -60px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.logo span {
+    color: #ffffff;
+    font-weight: 300;
+}
+
+/* Apenas se quiser diferenciar o título da página de cadastro */
+fieldset h1 {
+  color: #343a40;
+  font-size: 1.6rem;
+}
+
+/* Estilo específico para o formulário de cadastro */
+form.cadastro-form {
+  background-color: #ffffff;
+  padding: 2.5rem;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 450px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Botão de cadastro */
+form.cadastro-form .btn input[type="submit"] {
+  background: linear-gradient(135deg, #28a745, #218838);
+  color: white;
+}
+
+form.cadastro-form .btn input[type="submit"]:hover {
+  background: linear-gradient(135deg, #34ce57, #28a745);
+}
+
+/* Link para login */
+form.cadastro-form .link_cadastro {
+  color: #218838;
+}
+
+form.cadastro-form .link_cadastro:hover {
+  color: #155724;
+}

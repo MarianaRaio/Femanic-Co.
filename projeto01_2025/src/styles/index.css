@@ -1,0 +1,344 @@
+/* Estilos customizados básicos */
+
+
+.logo {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #ffc107;
+    margin-top: -60px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.logo span {
+    color: #ffffff;
+    font-weight: 300;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; /* Adicionado para evitar corte da sidebar */
+}
+
+/* Header */
+header {
+    background-color: #343a40;
+    color: white;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    padding: 1.5rem 2rem;
+    text-align: center;
+    margin-left: 220px;
+    font-weight: 700;
+    font-size: 2rem;
+    letter-spacing: 0.05em;
+}
+
+.header-principal {
+    background: linear-gradient(90deg, #212529 0%, #48515b 100%);
+    padding: 1.5rem 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.header-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+/* Sidebar */
+.sidebar {
+    background-color: #212529;
+    color: white;
+    min-height: 100vh;
+    width: 250px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow-y: auto;
+    transition: all 0.3s ease;
+    padding-top: 2rem;
+    z-index: 1000;
+
+}
+
+.sidebar.close {
+    width: 250px;
+}
+
+.logo-details {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-left: 1rem;
+    margin-bottom: 2rem;
+    font-weight: 700;
+    font-size: 1.25rem;
+}
+
+.logo-details i {
+    font-size: 1.8rem;
+    color: #ffc107;
+}
+
+.nav-links {
+    list-style: none;
+    padding-left: 0;
+}
+
+.nav-links li {
+    margin-bottom: 0.8rem;
+}
+
+.nav-links a {
+    color: white;
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+}
+
+.nav-links a:hover {
+    background-color: #ffc107;
+    color: #212529;
+}
+
+.nav-links i {
+    margin-right: 0.7rem;
+    font-size: 1.3rem;
+}
+
+/* Sub-menu */
+.sub-menu {
+    list-style: none;
+    padding-left: 2rem;
+    font-size: 0.9rem;
+}
+
+.sub-menu li a {
+    color: #ddd;
+    padding: 0.3rem 0;
+}
+
+.sub-menu li a:hover {
+    color: #ffffff;
+}
+
+/* Main content area */
+main.mandatory {
+    margin-left: 250px;
+    padding: 2rem 3rem;
+    transition: margin-left 0.3s ease;
+    min-width: calc(100% - 250px); /* Adicionado para garantir espaço ao lado da sidebar */
+}
+
+.sidebar.close + main.mandatory {
+    margin-left: 80px;
+}
+
+/* Home1 section */
+
+.home1 {
+    background-color: #ffc107;
+    width: 980px;
+    color: #212529;
+    padding: 2rem;
+    border-radius: 8px;
+    text-align: center;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.home1 p {
+    font-weight: 600;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+}
+
+/* Título animado simples */
+.title-led h2 {
+    font-weight: 900;
+    font-size: 2.2rem;
+    margin: 0.2rem 0;
+    letter-spacing: 0.1em;
+}
+
+/* Boxes dos produtos */
+.box {
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgb(0 0 0 / 0.1);
+    margin-bottom: 3rem;
+}
+
+.header_new {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.header_new h2 {
+    font-weight: 700;
+    font-size: 1.8rem;
+}
+
+.btn_veja a {
+    color: #212529;
+    display: inline-flex;
+    font-weight: 600;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.btn_veja a:hover {
+    color: #ffc107;
+}
+
+
+.linha1 {
+    height: 2px;
+    background-color: #ffc107;
+    margin-bottom: 1.5rem;
+}
+
+/* Produtos grid */
+.produtos {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.item {
+    background-color: #f1f3f5;
+    border-radius: 8px;
+    width: 250px;
+    box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+.item:hover {
+    transform: scale(1.05);
+}
+
+.produto_img {
+    overflow: hidden;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+.img_item {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.item:hover .img_item {
+    transform: scale(1.1);
+}
+
+.produto_nome {
+    padding: 0.7rem 1rem;
+    font-weight: 600;
+    text-align: center;
+    color: #212529;
+}
+
+.line {
+    height: 3px;
+    background-color: #ffc107;
+    margin: 0.5rem 2.5rem;
+    border-radius: 2px;
+}
+
+/* Section home5 - contato */
+.home5 .box_anuncio {
+    background-color: #344034;
+    color: white;
+    padding: 2rem;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.home5 .redes p {
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+}
+
+.rede_item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.rede_item p {
+    font-weight: 500;
+}
+
+/* Rodapé */
+footer.rodape {
+    background-color: #212529;
+    width: 1000px;
+    height: 120px;
+    color: #bbb;
+    padding: 1.5rem 2rem;
+    font-size: 0.9rem;
+    text-align: center;
+    margin-left: -20px;
+}
+
+footer .rodape-direitos p {
+    margin: 0;
+}
+
+footer a {
+    color: #ffc107;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+/* Responsividade simples */
+@media (max-width: 768px) {
+    main.mandatory {
+        margin-left: 0;
+        padding: 1rem;  
+        min-width: auto; /* Ajusta no mobile para não quebrar layout */
+    }
+    .sidebar {
+        position: relative;
+        width: 100%;
+        min-height: auto;
+        height: auto;
+    }
+    .sidebar.close {
+        width: 100%;
+    }
+    .produtos {
+        justify-content: center;
+    }
+}   
