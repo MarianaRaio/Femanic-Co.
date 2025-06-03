@@ -18,9 +18,9 @@ useEffect(() => {
 const totalItems = cartItems.reduce((acc, item) => acc + item.quantity, 0);
 
   const conjuntos = [
-    { id: 2, src: '/Imagens/Roupa1.jpeg', nome: 'Conjunto Moletom', preco: 'R$ 159,90' },
-    { id: 5, src: '/Imagens/Roupa4.jpg', nome: 'Conjunto Moletom e Shorts Preto', preco: 'R$ 119,90' },
-    { id: 6, src: '/Imagens/Roupa5.jpg', nome: 'Conjunto Moletom Bege', preco: 'R$ 139,90' },
+    { id: 2, src: '/Imagens/rtlM.jpg', nome: 'Conjunto Moletom', preco: 'R$ 159,90' },
+    { id: 5, src: '/Imagens/o7Po.jpg', nome: 'Conjunto Moletom e Shorts Preto', preco: 'R$ 119,90' },
+    { id: 6, src: '/Imagens/zZa5.jpg', nome: 'Conjunto Moletom Bege', preco: 'R$ 139,90' },
     
   ];    
 

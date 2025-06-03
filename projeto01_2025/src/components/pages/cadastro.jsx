@@ -51,8 +51,7 @@ export default function Cadastro() {
       alert(result.message);
 
       if (response.ok) {
-        // Redirecionar ou limpar formulário
-        // navigate("/login");
+        navigate("/login");
       }
     } catch (error) {
       console.error("Erro ao cadastrar:", error);
@@ -158,7 +157,7 @@ export default function Cadastro() {
 
             <div className="btn">
               <input type="submit" value="Cadastrar" />
-              <span>Já tem uma conta? <Link to="/login" className="link_cadastro">Faça login</Link></span>
+              <span> Já tem uma conta? <Link to="/login" className="link_cadastro"> Faça login</Link></span>
             </div>
           </fieldset>
         </form>
@@ -166,3 +165,5 @@ export default function Cadastro() {
     </>
   );
 }
+
+

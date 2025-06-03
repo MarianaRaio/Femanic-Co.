@@ -5,8 +5,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'boxicons/css/boxicons.min.css';
 
 export default function Login() {
-  const [form, setForm] = useState({ email: '', senha: '' });
   const navigate = useNavigate();
+  const [form, setForm] = useState({ email: '', senha: '' });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -27,7 +27,9 @@ export default function Login() {
 
       if (res.ok) {
         alert(result.message || "Login realizado com sucesso!");
-        // Redirecionar para página protegida ou home
+
+        localStorage.setItem('usuarioId', result.id);
+        
         navigate("/home");
       } else {
         alert(result.message || "Erro ao fazer login");
@@ -111,8 +113,7 @@ export default function Login() {
 
             <div className="btn">
               <input type="submit" value="Login" />
-              <span>
-                Não tem uma conta? <Link to="/cadastro" className="link_cadastro">Cadastre-se</Link>
+              <span> Não tem uma conta? <Link to="/cadastro" className="link_cadastro">Cadastre-se</Link>
               </span>
             </div>
           </fieldset>

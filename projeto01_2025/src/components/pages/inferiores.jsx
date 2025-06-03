@@ -18,9 +18,9 @@ useEffect(() => {
   const totalItems = cartItems.reduce((acc, item) => acc + item.quantity, 0);
 
   const inferiores = [
-    { id: 4, src: '/Imagens/Roupa3.jpg', nome: 'Calça de Moletom Cinza', preco: 'R$ 59,90' },
-    { id: 8, src: '/Imagens/Roupa7.jpeg', nome: 'Calça Cargo Moletom Azul', preco: 'R$ 69,90' },
-    { id: 9, src: '/Imagens/Roupa5.jpg', nome: 'Calça Moletom Bege', preco: 'R$ 59,90' },
+    { id: 4, src: '/Imagens/uuS2.jpg', nome: 'Calça de Moletom Cinza', preco: 'R$ 59,90' },
+    { id: 8, src: '/Imagens/mzjd.jpg', nome: 'Calça Cargo Moletom Azul', preco: 'R$ 69,90' },
+    { id: 9, src: '/Imagens/kP1O.jpg', nome: 'Calça Moletom Bege', preco: 'R$ 59,90' },
     
   ];    
 

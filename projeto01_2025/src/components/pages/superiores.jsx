@@ -18,9 +18,10 @@ useEffect(() => {
   const totalItems = cartItems.reduce((acc, item) => acc + item.quantity, 0);
 
   const superiores = [
-    { id: 1, src: '/Imagens/Roupa.jpg', nome: 'Moletom Simples Cinza', preco: 'R$ 89,90' },
-    { id: 7, src: '/Imagens/Roupa6.jpeg', nome: 'Cropped Preto Básico', preco: 'R$ 39,90' },
-    { id: 3, src: '/Imagens/Roupa2.jpg', nome: 'Agasalho de Zíper Preto', preco: 'R$ 119,90' },
+    { id: 1, src: '/Imagens/8Ve0.jpg', nome: 'Moletom Simples Cinza', preco: 'R$ 89,90' },
+    { id: 3, src: '/Imagens/gIk6.jpg', nome: 'Agasalho com Zíper Preto', preco: 'R$ 119,90' },
+    { id: 7, src: '/Imagens/b95i.jpg', nome: 'Cropped Preto', preco: 'R$ 39,90' },
+    
   ];
 
   const handleAddToCart = (item) => {

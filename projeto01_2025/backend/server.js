@@ -1,42 +1,37 @@
 import express from 'express';
-import cors from 'cors';
+import dotenv from 'dotenv';
 import mysql from 'mysql2/promise';
-import fs from 'fs';
-import path from 'path';
+import cors from 'cors';
 import bcrypt from 'bcryptjs';
-import { fileURLToPath } from 'url';
-import connection from './db.js';
+import pool from './db.js';
+
+//const mysql = require('mysql2')
+dotenv.config();
 
 const app = express();
-const PORT = 3001;
-
+app.use(express.json())
 app.use(cors());
-app.use(express.json());
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-// Caminho para o arquivo de usuários
-const usersFile = path.join(__dirname, './src/components/backend/data/users.json');
-
-// Funções auxiliares
-const readUsers = () => {
-  if (!fs.existsSync(usersFile)) return [];
-  const data = fs.readFileSync(usersFile);
-  return JSON.parse(data);
-};
-
-const writeUsers = (users) => {
-  fs.writeFileSync(usersFile, JSON.stringify(users, null, 2));
-};
 
 // Endpoint Hello-World
 app.get('/api/hello-world', (req, res) => {
   res.send('Hello World!');
 });
 
-//rotas
-// cadastro
+// ======== Endpoints da aplicação ========
+
+// usuário
+// busca todos os cadastros dos usuários
+app.get('/api/cadastro', async (req, res) => {
+  try {
+    const [rows] = await pool.query('SELECT ID, NOME, EMAIL, IDADE, RECEBER, TERMOS FROM usuario');
+    res.json(rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Erro ao buscar usuários' });
+  }
+});
+
+// cadastra novos usuários
 app.post('/api/cadastro', async (req, res) => {
   const { nome, email, idade, senha, receber, termos } = req.body;
 
@@ -67,58 +62,176 @@ app.post('/api/cadastro', async (req, res) => {
   }
 });
 
-// login
+//login
 app.post('/api/login', async (req, res) => {
   const { email, senha } = req.body;
 
+  if (!email || !senha) {
+    return res.status(400).json({ message: "Email e senha são obrigatórios." });
+  }
+
   try {
-    const conn = await pool.getConnection();
-    const [rows] = await conn.query('SELECT * FROM usuario WHERE EMAIL = ?', [email]);
+    const [rows] = await pool.query("SELECT ID, SENHA FROM usuario WHERE EMAIL = ?", [email]);
 
     if (rows.length === 0) {
-      conn.release();
-      return res.status(401).json({ message: 'Usuário não encontrado' });
+      return res.status(401).json({ message: "Email ou senha incorretos." });
     }
 
     const usuario = rows[0];
-    const match = await bcrypt.compare(senha, usuario.SENHA);
+    const senhaValida = await bcrypt.compare(senha, usuario.SENHA);
 
-    conn.release();
-    if (!match) {
-      return res.status(401).json({ message: 'Senha incorreta' });
+    if (!senhaValida) {
+      return res.status(401).json({ message: "Email ou senha incorretos." });
     }
 
-    res.json({ message: 'Login bem-sucedido', nome: usuario.NOME });
+    return res.status(200).json({ message: "Login realizado com sucesso!", id: usuario.ID });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'Erro no servidor' });
+    console.error("Erro no login:", err);
+    return res.status(500).json({ message: "Erro interno do servidor." });
   }
 });
 
-// salvar endereços
-app.post("/api/endereco", async (req, res) => {
-  const { rua, numero, bairro, complemento, estado, cidade } = req.body;
 
-  if (!rua || !numero || !bairro || !complemento || !estado || !cidade) {
-    return res.status(400).json({ error: "Todos os campos são obrigatórios" });
+// produtos
+// busca todos os produtos 
+app.get('/api/produto', async (req, res) => {
+  try {
+    const [rows] = await pool.query('SELECT * FROM produto');
+    res.json(rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Erro ao buscar produtos' });
+  }
+});
+
+//carrinho
+app.post('/api/carrinho', async (req, res) => {
+  const { endereco, produtos } = req.body;
+
+  if (!endereco || !produtos || produtos.length === 0) {
+    return res.status(400).json({ message: 'Endereço ou produtos não informados.' });
   }
 
-  const sql = `INSERT INTO enderecos (RUA, NUMERO, BAIRRO, COMPLEMENTO, ESTADO, CIDADE)
-    VALUES (?, ?, ?, ?, ?, ?)`;
+  const ID_CARRINHO = Date.now(); // Gerador simples de ID de carrinho único
 
-  db.query(sql, [rua, numero, bairro, complemento, estado, cidade], (err, result) => {
-    if (err) {
-      console.error("Erro ao inserir endereço:", err);
-      return res.status(500).json({ error: "Erro ao salvar o endereço" });
+  try {
+    const insertPromises = produtos.map((item) => {
+      const sql = `
+        INSERT INTO carrinhoprod (ID_CARRINHO, PRODUTO, PRECO, QUANTIDADE)
+        VALUES (?, ?, ?, ?)
+      `;
+      return pool.query(sql, [ID_CARRINHO, item.nome, item.preco, item.quantidade]);
+    });
+
+    await Promise.all(insertPromises);
+
+    res.status(201).json({ message: 'Carrinho salvo com sucesso.', ID_CARRINHO });
+  } catch (error) {
+    console.error('Erro ao salvar carrinho:', error);
+    res.status(500).json({ message: 'Erro interno ao salvar o carrinho.' });
+  }
+});
+
+
+// Busca todos os itens do carrinho com subtotal
+app.get('/api/carrinho', async (req, res) => {
+  try {
+    const [rows] = await pool.query(
+      'SELECT ID_CARRINHO, PRODUTO, PRECO, QUANTIDADE, SUBTOTAL FROM carrinhoprod ORDER BY ID_CARRINHO'
+    );
+
+    const carrinhosMap = {};
+
+    for (const row of rows) {
+      if (!carrinhosMap[row.ID_CARRINHO]) {
+        carrinhosMap[row.ID_CARRINHO] = [];
+      }
+      carrinhosMap[row.ID_CARRINHO].push({
+        produto: row.PRODUTO,
+        preco: row.PRECO,
+        quantidade: row.QUANTIDADE,
+        subtotal: row.SUBTOTAL,
+      });
     }
 
-    res.status(200).json({ message: "Endereço salvo com sucesso!" });
+    const carrinhos = Object.entries(carrinhosMap).map(([id, produtos]) => ({
+      id_carrinho: id,
+      produtos,
+    }));
+
+    res.status(200).json(carrinhos);
+  } catch (err) {
+    console.error('Erro ao buscar o carrinho:', err);
+    res.status(500).json({ message: 'Erro ao buscar o carrinho' });
   }
-  )
+});
+
+// endereços
+// cadastra um endereço
+app.post('/api/endereco', async (req, res) => {
+  const { rua, numero, bairro, complemento, estado, cidade } = req.body;
+
+  if (!rua || !numero || !bairro || !estado || !cidade) {
+    return res.status(400).json({ message: 'Campos obrigatórios ausentes' });
+  }
+
+  try {
+    await pool.query(
+      'INSERT INTO enderecos (RUA, NUMERO, BAIRRO, COMPLEMENTO, ESTADO, CIDADE) VALUES (?, ?, ?, ?, ?, ?)',
+      [rua, numero, bairro, complemento || '', estado, cidade]
+    );
+    res.status(201).json({ message: 'Endereço salvo com sucesso!' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Erro ao salvar endereço' });
+  }
+});
+
+//busca endereços
+app.get('/api/enderecos', async (req, res) => {
+  try {
+    const [rows] = await pool.query('SELECT * FROM enderecos');
+    res.status(200).json(rows);
+  } catch (err) {
+    console.error('Erro ao buscar endereços:', err);
+    res.status(500).json({ message: 'Erro ao buscar endereços' });
+  }
+});
+
+//carrinho 
+// busca todos os produtos do carrinho 
+app.get('/api/carrinho', async (req, res) => {
+  try {
+    const [rows] = await pool.query('SELECT * FROM carrinhoprod');
+    res.json(rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Erro ao buscar o carrinho' });
+  }
+});
+
+// add produtos no carrinho
+app.post('/api/carrinho', async (req, res) => {
+  const { ID, NOME, CLASSE, VALOR } = req.body;
+  if (!ID || !NOME || !CLASSE || !VALOR) {
+    return res.status(400).json({ message: 'Preencha todos os campos do produto' });
+  }
+
+  try {
+    await pool.query(
+      'INSERT INTO carrinhoprod (ID, NOME, CLASSE, VALOR) VALUES (?, ?, ?, ?)',
+      [ID, NOME, CLASSE, VALOR]
+    );
+    res.status(201).json({ message: 'Produto adicionado ao carrinho' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Erro ao adicionar produto no carrinho' });
+  }
 });
 
 
 // Inicia o servidor
+const PORT = 3001;
 app.listen(PORT, () => {
   console.log(`Servidor rodando em http://localhost:${PORT}`);
 });

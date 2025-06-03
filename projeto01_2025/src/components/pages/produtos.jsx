@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'boxicons/css/boxicons.min.css';
@@ -9,11 +9,27 @@ import { useCart } from '../../context/CartContext';
 
 function Produtos() {
   const { cartItems, addToCart } = useCart();
+  const location = useLocation();
 
-  
-const location = useLocation();
+  const [produto, setProdutos] = useState([]);
+
 useEffect(() => {
   window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    fetch('http://localhost:3001/api/produto') 
+      .then((res) => res.json())
+      .then((data) => {
+        const produtosComImagem = data.map(prod => ({
+          id: prod.IDPROD,
+          nome: prod.NOME,
+          preco: `R$ ${prod.PRECO.toFixed(2).replace('.', ',')}`,
+          src: `/Imagens/${prod.IDPROD}.jpg` 
+        }));
+        setProdutos(produtosComImagem);
+      })
+      .catch((err) => {
+        console.error('Erro ao buscar produtos:', err);
+      });
 }, [location.pathname]);
 
 
@@ -21,15 +37,15 @@ useEffect(() => {
   const totalItems = cartItems.reduce((acc, item) => acc + item.quantity, 0);
 
   const produtos = [
-    { id: 1, src: '/Imagens/Roupa.jpg', nome: 'Moletom Simples Cinza', preco: 'R$ 89,90' },
-    { id: 3, src: '/Imagens/Roupa2.jpg', nome: 'Agasalho com Zíper Preto', preco: 'R$ 119,90' },
-    { id: 2, src: '/Imagens/Roupa1.jpeg', nome: 'Conjunto Moletom', preco: 'R$ 159,90' },
-    { id: 4, src: '/Imagens/Roupa3.jpg', nome: 'Calça de Moletom Cinza', preco: 'R$ 59,90' },
-    { id: 5, src: '/Imagens/Roupa4.jpg', nome: 'Conjunto Moletom e Shorts Preto', preco: ' R$ 119,90' },
-    { id: 6, src: '/Imagens/Roupa5.jpg', nome: 'Conjunto Moletom Bege', preco: 'R$ 139,90' },
-    { id: 7, src: '/Imagens/Roupa6.jpeg', nome: 'Cropped Preto', preco: 'R$ 39,90' },
-    { id: 8, src: '/Imagens/Roupa7.jpeg', nome: 'Calça Cargo Moletom Azul', preco: 'R$ 69,90' },
-    { id: 9, src: '/Imagens/Roupa8.jpeg', nome: 'Calça Moletom Bege', preco: 'R$ 59,90' }
+    { id: 1, src: '/Imagens/8Ve0.jpg', nome: 'Moletom Simples Cinza', preco: 'R$ 89,90' },
+    { id: 3, src: '/Imagens/gIk6.jpg', nome: 'Agasalho com Zíper Preto', preco: 'R$ 119,90' },
+    { id: 2, src: '/Imagens/rtlM.jpg', nome: 'Conjunto Moletom', preco: 'R$ 159,90' },
+    { id: 4, src: '/Imagens/uuS2.jpg', nome: 'Calça de Moletom Cinza', preco: 'R$ 59,90' },
+    { id: 5, src: '/Imagens/o7Po.jpg', nome: 'Conjunto Moletom e Shorts Preto', preco: ' R$ 119,90' },
+    { id: 6, src: '/Imagens/zZa5.jpg', nome: 'Conjunto Moletom Bege', preco: 'R$ 139,90' },
+    { id: 7, src: '/Imagens/b95i.jpg', nome: 'Cropped Preto', preco: 'R$ 39,90' },
+    { id: 8, src: '/Imagens/mzjd.jpg', nome: 'Calça Cargo Moletom Azul', preco: 'R$ 69,90' },
+    { id: 9, src: '/Imagens/kP1O.jpg', nome: 'Calça Moletom Bege', preco: 'R$ 59,90' }
   ];
 
 const handleAddToCart = (item) => {

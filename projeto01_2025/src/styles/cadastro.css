@@ -1,68 +1,100 @@
-x/* Cadastro.css */
+/* Cabeçalho */
 .header-principal {
-    background: linear-gradient(90deg, #212529 0%, #48515b 100%);
-    padding: 1.5rem 0;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    position: sticky;
-    top: 0;
-    z-index: 1000;
+  background: linear-gradient(90deg, #212529 0%, #48515b 100%);
+  padding: 1.5rem 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
 
 .header-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 2rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .logo {
-    font-size: 2.5rem;
-    font-weight: 800;
-    color: #ffc107;
-    margin-top: -60px;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #ffc107;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .logo span {
-    color: #ffffff;
-    font-weight: 300;
+  color: #ffffff;
+  font-weight: 300;
 }
 
-/* Apenas se quiser diferenciar o título da página de cadastro */
-fieldset h1 {
-  color: #343a40;
-  font-size: 1.6rem;
-}
-
-/* Estilo específico para o formulário de cadastro */
-form.cadastro-form {
+/* Formulário */
+.form-container {
   background-color: #ffffff;
   padding: 2.5rem;
   border-radius: 12px;
-  width: 100%;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
   max-width: 450px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  margin: 0 auto;
 }
 
-/* Botão de cadastro */
-form.cadastro-form .btn input[type="submit"] {
-  background: linear-gradient(135deg, #28a745, #218838);
-  color: white;
+.form-container h1 {
+  font-weight: 700;
+  font-size: 1.8rem;
+  text-align: center;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
 }
 
-form.cadastro-form .btn input[type="submit"]:hover {
-  background: linear-gradient(135deg, #34ce57, #28a745);
+/* Inputs escuros */
+.form-container input.form-control {
+  background-color: #2f2f2f !important;
+  color: #fff !important;
+  border: none !important;
+  font-weight: 500;
+  padding: 10px 12px;
+  border-radius: 6px;
 }
 
-/* Link para login */
-form.cadastro-form .link_cadastro {
-  color: #218838;
+.form-container input.form-control::placeholder {
+  color: #bbb !important;
 }
 
-form.cadastro-form .link_cadastro:hover {
-  color: #155724;
+
+.form-control::placeholder {
+  color: #ccc;
 }
+
+/* Checkboxes */
+.form-check-label {
+  color: #333;
+  font-weight: 500;
+}
+
+/* Botão amarelo */
+.btn-yellow {
+  background: linear-gradient(135deg, #ffc107, #e0a800);
+  color: black;
+  font-weight: bold;
+  border: none;
+  padding: 10px;
+  border-radius: 6px;
+}
+
+.btn-yellow:hover {
+  background: linear-gradient(135deg, #e0a800, #ffc107);
+  color: black;
+}
+
+/* Hover amarelo para links do menu lateral */
+.sidebar-link:hover {
+  background-color: #ffc107;
+  color: #000 !important;
+  font-weight: 600;
+  border-radius: 8px;
+  transition: background-color 0.2s ease;
+}
+

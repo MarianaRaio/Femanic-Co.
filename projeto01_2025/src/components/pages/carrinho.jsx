@@ -26,10 +26,13 @@ useEffect(() => {
     cidade: "",
   });
 
+const [salvando, setSalvando] = useState(false);
+
   const salvarEndereco = async (e) => {
     e.preventDefault();
+    setSalvando(true);
     try {
-      const response = await fetch("http://localhost:3000/api/endereco", {
+      const response = await fetch("http://localhost:3001/api/endereco",{
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(endereco),
@@ -43,35 +46,73 @@ useEffect(() => {
     } catch (error) {
       console.error("Erro ao salvar endereço:", error);
       alert("Erro na comunicação com o servidor.");
-    }
+    } finally {
+      setSalvando(false); 
+    } 
   };
 
-  const handlePayment = () => {
-    if (cartItems.length === 0) {
-      alert('Adicione produtos no carrinho para prosseguir!');
-      navigate('/produtos');
-      return;
-    }
+  const handlePayment = async () => {
+  if (cartItems.length === 0) {
+    alert('Adicione produtos no carrinho para prosseguir!');
+    navigate('/produtos');
+    return;
+  }
 
-    const camposObrigatorios = [
-      endereco.rua,
-      endereco.numero,
-      endereco.bairro,
-      endereco.complemento,
-      endereco.estado,
-      endereco.cidade,
-    ];
+  const camposObrigatorios = [
+    endereco.rua, endereco.numero, endereco.bairro,
+    endereco.complemento, endereco.estado, endereco.cidade,
+  ];
 
-    const enderecoPreenchido = camposObrigatorios.every((campo) => campo.trim() !== "");
+  const enderecoPreenchido = camposObrigatorios.every((campo) => campo.trim() !== "");
+  if (!enderecoPreenchido) {
+    alert('Preencha todos os campos do endereço antes de prosseguir para o pagamento.');
+    return;
+  }
 
-    if (!enderecoPreenchido) {
-      alert('Preencha todos os campos do endereço antes de prosseguir para o pagamento.');
-      return;
-    }
+  const dadosCarrinho = {
+    endereco,
+    produtos: cartItems.map((item) => ({
+      nome: item.name,
+      preco: item.price,
+      quantidade: item.quantity
+    }))
+  };
 
-    alert('Pagamento realizado com sucesso!');
-    clearCart();
-  };
+  try {
+    const response = await fetch("http://localhost:3001/api/carrinho", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(dadosCarrinho),
+    });
+
+    if (!response.ok) {
+      throw new Error("Erro ao salvar o carrinho");
+    }
+
+    // Salva o endereço 
+    await fetch("http://localhost:3001/api/endereco", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(endereco),
+    });
+
+    alert('Pagamento realizado e carrinho salvo com sucesso!');
+    clearCart();
+    setEndereco({
+      rua: "", 
+      numero: "", 
+      bairro: "",
+      complemento: "", 
+      estado: "", 
+      cidade: "",
+    });
+    navigate('/home'); 
+
+  } catch (error) {
+    console.error("Erro ao processar pagamento:", error);
+    alert("Erro na comunicação com o servidor.");
+  }
+};
 
   return (
     <main className="mandatory">
@@ -123,7 +164,7 @@ useEffect(() => {
 
         <div className="p-6 bg-gray-100 min-h-screen content">
           <div className="botao-voltar">
-            <button onClick={() => navigate("/produtos")} className="btn-voltar">← Voltar</button>
+            <button onClick={() => navigate("/produtos")} className="botao-voltar">← Voltar</button>
           </div>
 
           <h2 className="titulo-carrinho">🛒 Carrinho</h2>
@@ -218,7 +259,7 @@ useEffect(() => {
                   <input type="text" placeholder="São Paulo" value={endereco.cidade} onChange={(e) => setEndereco({ ...endereco, cidade: e.target.value })} required />
                 </div>
                 <div className="form-submit">
-                  <button type="submit">Salvar Endereço</button>
+                  <button type="submit" disabled={salvando}> {salvando ? "Salvando..." : "Salvar Endereço"}</button>
                 </div>
               </form>
             

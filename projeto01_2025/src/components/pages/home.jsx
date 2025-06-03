@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'boxicons/css/boxicons.min.css';
 import '../../styles/index.css';
 import { Link } from 'react-router-dom';
-import { useCart } from '../../context/CartContext'; 
+import { useCart } from '../../context/CartContext';
 
 function HomePage() {
   const { cartItems } = useCart(); 
@@ -96,9 +96,9 @@ useEffect(() => {
             <div className="linha1"></div>
             <div className="produtos">
               {[
-                { src: '/Imagens/Roupa.jpg', nome: 'Moletom Simples Cinza' },
-                { src: '/Imagens/Roupa2.jpg', nome: 'Agasalho com Zíper Preto' },
-                { src: '/Imagens/Roupa1.jpeg', nome: 'Conjunto Moletom' },
+                { src: '/Imagens/8Ve0.jpg', nome: 'Moletom Simples Cinza' },
+                { src: '/Imagens/gIk6.jpg', nome: 'Agasalho com Zíper Preto' },
+                { src: '/Imagens/rtlM.jpg', nome: 'Conjunto Moletom' },
                
               ].map((item, index) => (
                 <div className="item" key={index}>
@@ -132,9 +132,9 @@ useEffect(() => {
             <div className="linha1"></div>
             <div className="produtos">
               {[
-                { src: '/Imagens/Roupa3.jpg', nome: 'Calça de Moletom Cinza' },
-                { src: '/Imagens/Roupa4.jpg', nome: 'Conjunto Moletom e Shorts Preto' },
-                { src: '/Imagens/Roupa5.jpg', nome: 'Conjunto Moletom Bege' }
+                { src: '/Imagens/uuS2.jpg', nome: 'Calça de Moletom Cinza' },
+                { src: '/Imagens/o7Po.jpg', nome: 'Conjunto Moletom e Shorts Preto' },
+                { src: '/Imagens/zZa5.jpg', nome: 'Conjunto Moletom Bege' }
               ].map((item, index) => (
                 <div className="item" key={index}>
                   <div className="produto_img">
