@@ -113,8 +113,10 @@ export default function Login() {
 
             <div className="btn">
               <input type="submit" value="Login" />
-              <span> Não tem uma conta? <Link to="/cadastro" className="link_cadastro">Cadastre-se</Link>
-              </span>
+                <div className="cadastro-redirect">
+                  <span> Não tem uma conta? </span>
+                <Link to="/cadastro" className="link_cadastro"> Cadastre-se </Link>
+              </div>
             </div>
           </fieldset>
         </form>

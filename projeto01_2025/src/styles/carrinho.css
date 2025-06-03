@@ -17,20 +17,12 @@
   width: 140%;
 }
 
-.endereco-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2rem;
-  margin-top: 0rem; 
-  width: 140%;
-}
 
 
 .endereco-form {
   background-color: #ffffff;
   padding: 2rem;
-   justify-content: center;
+  justify-content: center;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   width: 100%;
@@ -134,7 +126,7 @@ th {
 
 
 .form-grid {
-   margin-left: 70px;
+  margin-left: 70px;
   display: center;
   grid-template-columns: 1fr 1fr;
   width: 100%;
@@ -216,6 +208,15 @@ form button[type="submit"]:hover {
 
 .total-container button:hover {
   background-color: #23272b;
+}
+
+.endereco-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  margin-top: 0rem; 
+  width: 140%;
 }
 
 @media (max-width: 768px) {

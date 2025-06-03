@@ -3,8 +3,10 @@ import { Link } from 'react-router-dom';
 import "../../styles/cadastro.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'boxicons/css/boxicons.min.css';
+import { useNavigate } from 'react-router-dom';
 
 export default function Cadastro() {
+  const navigate = useNavigate();
   const [form, setForm] = useState({
     nome: '',
     email: '',
@@ -23,6 +25,7 @@ export default function Cadastro() {
     });
   };
 
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -143,21 +146,22 @@ export default function Cadastro() {
 
             <div className="input">
               <label>
-                <input type="checkbox" name="receber" checked={form.receber} onChange={handleChange} />
-                Desejo receber emails promocionais
+                <input type="checkbox" name="receber" checked={form.receber} onChange={handleChange} /> Desejo receber emails promocionais
               </label>
             </div>
 
             <div className="input">
               <label>
-                <input type="checkbox" name="termos" checked={form.termos} onChange={handleChange} required />
-                Aceito os termos de uso
+                <input type="checkbox" name="termos" checked={form.termos} onChange={handleChange} required /> Aceito os termos de uso
               </label>
             </div>
 
             <div className="btn">
               <input type="submit" value="Cadastrar" />
-              <span> Já tem uma conta? <Link to="/login" className="link_cadastro"> Faça login</Link></span>
+              <div className="login-redirect">
+                <span>Já tem uma conta? </span>
+                <Link to="/login" className="link_cadastro">Faça login</Link>
+              </div>
             </div>
           </fieldset>
         </form>

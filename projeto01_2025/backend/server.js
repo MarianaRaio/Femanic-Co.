@@ -5,12 +5,12 @@ import cors from 'cors';
 import bcrypt from 'bcryptjs';
 import pool from './db.js';
 
-//const mysql = require('mysql2')
 dotenv.config();
 
 const app = express();
 app.use(express.json())
 app.use(cors());
+
 
 // Endpoint Hello-World
 app.get('/api/hello-world', (req, res) => {
@@ -200,7 +200,7 @@ app.get('/api/enderecos', async (req, res) => {
 
 //carrinho 
 // busca todos os produtos do carrinho 
-app.get('/api/carrinho', async (req, res) => {
+app.get('/api/carrinhoprod', async (req, res) => {
   try {
     const [rows] = await pool.query('SELECT * FROM carrinhoprod');
     res.json(rows);
@@ -211,7 +211,7 @@ app.get('/api/carrinho', async (req, res) => {
 });
 
 // add produtos no carrinho
-app.post('/api/carrinho', async (req, res) => {
+app.post('/api/carrinhoprod', async (req, res) => {
   const { ID, NOME, CLASSE, VALOR } = req.body;
   if (!ID || !NOME || !CLASSE || !VALOR) {
     return res.status(400).json({ message: 'Preencha todos os campos do produto' });

@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate, Link } from 'react-router-dom';
 import { useCart } from "../../context/CartContext";
 import "../../styles/carrinho.css";
-import { useNavigate, Link } from "react-router-dom";
 import { useState } from "react";
 
 const Carrinho = () => {
@@ -79,13 +78,13 @@ const [salvando, setSalvando] = useState(false);
   };
 
   try {
-    const response = await fetch("http://localhost:3001/api/carrinho", {
+    const carrinhoResponse = await fetch("http://localhost:3001/api/carrinho", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(dadosCarrinho),
     });
 
-    if (!response.ok) {
+    if (!carrinhoResponse.ok) {
       throw new Error("Erro ao salvar o carrinho");
     }
 
@@ -106,7 +105,8 @@ const [salvando, setSalvando] = useState(false);
       estado: "", 
       cidade: "",
     });
-    navigate('/home'); 
+    
+    navigate('/home');
 
   } catch (error) {
     console.error("Erro ao processar pagamento:", error);
@@ -200,7 +200,7 @@ const [salvando, setSalvando] = useState(false);
             </table>
           </div>
           </div>
-
+        
           <div className="endereco-container">
             <div className="endereco-form">
               <h3>Endereço</h3>
@@ -263,20 +263,19 @@ const [salvando, setSalvando] = useState(false);
                 </div>
               </form>
             
-
-      <div className="total-container">
-        <h3>Total no carrinho</h3>
-        <div>
-          <p>Subtotal: <strong>R$ {total.toFixed(2)}</strong></p>
-          <p>Total: <strong>R$ {total.toFixed(2)}</strong></p>
-          <button onClick={handlePayment}>IR PARA O PAGAMENTO</button>
           
+              <div className="total-container">
+                <h3>Total no carrinho</h3>
+                <div>
+                  <p>Subtotal: <strong>R$ {total.toFixed(2)}</strong></p>
+                  <p>Total: <strong>R$ {total.toFixed(2)}</strong></p>
+                <button onClick={handlePayment}>IR PARA O PAGAMENTO</button>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
   </main>
-    )
-  }
+  )
+}
 
-  export default Carrinho;
+export default Carrinho;

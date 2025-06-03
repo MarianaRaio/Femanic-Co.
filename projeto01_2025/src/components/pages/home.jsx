@@ -150,8 +150,33 @@ useEffect(() => {
             </div>
           </div>
         </section>
+        <a href="https://t.me/Femanic_bot" // substitua pelo username real do seu bot
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            position: 'fixed',
+            bottom: '20px',
+            right: '20px',
+            zIndex: 1000,
+            textDecoration: 'none',
+          }}>
+          <button
+            style={{
+              backgroundColor: '#FFD700',
+              color: 'black',
+              border: 'none',
+              padding: '12px 20px',
+              borderRadius: '30px',
+              boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+              fontSize: '16px',
+              cursor: 'pointer',
+            }}
+          >
+            Suporte
+          </button>
+        </a>
 
-          <footer className="rodape" id="contato">
+      <footer className="rodape" id="contato">
         <div className="rodape-div">
           <div className="rodape-div-1">
             <div className="rodape-div-1-coluna"></div>
